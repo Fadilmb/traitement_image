@@ -6,25 +6,30 @@ d=size(a);
 e=d(1);
 f=d(2);
 
-for i=1:e
-    for j=1:f
+function extensionDynamicRange (x,f)
+a=x(:,:,f);
+size_image=size(a);
+matix_columns = size_image(1);
+matix_arrows = size_image(2);
+    
+for i=1:matix_columns
+    for j=1:matix_arrows
         aa(i,j)=(255/(max(a)-min(a)))*(a(i,j)-min(a));
     end
 end
+endfunction
 
-for i=1:e
-    for j=1:f
-        ba(i,j)=(255/(max(b)-min(b)))*(b(i,j)-min(b));
-    end
-end
+extensionDynamicRange (x,1);
 
-for i=1:e
-    for j=1:f
-        ca(i,j)=(255/(max(c)-min(c)))*(c(i,j)-min(c));
-    end
+for i=1:256
+    va(i)=i-1;
 end
+[aaa,aaaind]=histplot(va,double(aa));
+bar(imhist(a))
 
-for i=1:255
-    va(i)=i;
-end
-[aaa,aaaind]=histc(va,aa);
+figure(0);
+subplot(1,2,1)
+imshow(a);
+subplot(1,2,2)
+histplot(va,double(a));
+
